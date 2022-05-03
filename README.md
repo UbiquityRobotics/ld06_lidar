@@ -3,6 +3,12 @@
 This is an attempt to fix and improve the driver provided by LDRobots in their
 [website](https://www.ldrobot.com/download/44)
 
+
+Make sure to install deps first:
+
+    rosdep install --from-paths src --ignore-src --rosdistro=$ROS_DISTRO -y
+
+
 ## Parameters
 
 The ldlidar node supports the following parameters:
