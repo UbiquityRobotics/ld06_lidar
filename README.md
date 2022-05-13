@@ -1,13 +1,22 @@
-# LD06 Lidar ROS driver
+# ur12_lidar_driver
 
-This is an attempt to fix and improve the driver provided by LDRobots in their
-[website](https://www.ldrobot.com/download/44)
+## Description
+The `ur12_lidar_driver` package is a linux ROS driver for the LD-06/19 series of lidars.
+The package is tested on Ubuntu 20.04 with ROS Noetic.
 
+## Compling
+
+This is a catkin package. Make sure the package is on `ROS_PACKAGE_PATH` after cloning the package to your workspace. And the normal procedure for compling a catkin package will work.
 
 Make sure to install deps first:
 
-    rosdep install --from-paths src --ignore-src --rosdistro=$ROS_DISTRO -y
+    cd your_work_space/src
+    git clone https://github.com/UbiquityRobotics/ur50_lidar.git
 
+    cd..
+    rosdep install --from-paths src --ignore-src --rosdistro=$ROS_DISTRO -y
+    catkin_make 
+    ```
 
 ## Parameters
 
@@ -21,26 +30,13 @@ An example launch file including all parameters is provided below:
 
 ```xml
 <launch>
- <node name="LD06" pkg="ldlidar" type="ldlidar" args="LD06" output="screen" >
-    <param name="serial_port" value="/dev/ttyUSB12"/>
-    <param name="lidar_frame" value="my_new_lidar_frame"/>
- </node>
+    <node name="ur12_lidar" pkg="ur12_lidar" type="ur12_lidar" args="LD06" output="screen" >
+        <param name="serial_port" value="/dev/ttyUSB0"/>
+        <param name="lidar_frame" value="laser"/>
+     </node>
 </launch>
 ```
 
-## Building the driver
-
-```bash
-# create a workspace folder (or use the existing workspace for your robot)
-mkdir -p lidar_driver_ws/src
-cd lidar_driver_ws/src
-# clone the repo within a workspace
-git clone https://github.com/AlessioMorale/ld06_lidar.git
-cd ..
-# install all prerequisites & build
-rosdep install --from-paths src --ignore-src -y
-catkin build
-```
 ## ROS Support
 
 - Kinetic

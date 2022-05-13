@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>ld06_lidar</name>
-  <version>0.0.0</version>
-  <description>The ld06_lidar package</description>
+  <name>ur12_lidar</name>
+  <version>0.0.1</version>
+  <description>The ur12_lidar package</description>
 
-  <maintainer email="weyne@todo.todo">weyne</maintainer>
+  <maintainer email="vr@ubiquityrobotics.com">weyne</maintainer>
 
   <license>BSD</license>
 

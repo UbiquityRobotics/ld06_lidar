@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(ld06_lidar)
+project(ur12_lidar)
 
 find_package(catkin REQUIRED COMPONENTS
     roscpp
@@ -8,7 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES ld06_lidar
+#  LIBRARIES ur12_lidar
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
 )
@@ -41,12 +41,12 @@ SET(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 
 file(GLOB  MAIN_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 
-add_executable(ld06_lidar  ${MAIN_SRC})
-target_link_libraries(ld06_lidar pthread udev  ${catkin_LIBRARIES})
+add_executable(ur12_lidar  ${MAIN_SRC})
+target_link_libraries(ur12_lidar pthread udev  ${catkin_LIBRARIES})
 
 
 ## Mark executables and/or libraries for installation
-install(TARGETS ${PROJECT_NAME} ld06_lidar
+install(TARGETS ${PROJECT_NAME} ur12_lidar
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -54,6 +54,6 @@ install(TARGETS ${PROJECT_NAME} ld06_lidar
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 install(FILES
-  launch/ld06.launch
+  launch/ur12.launch
    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
