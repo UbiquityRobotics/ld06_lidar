@@ -1,0 +1,93 @@
+name: OTA Package
+
+on:
+  push:
+      branches:
+         - snap_release
+      paths-ignore:
+         - 'README.md'
+         - '*/README.md'
+         - '.gitignore'
+         - 'image_changelog.txt'
+         - 'image_releases.txt'
+         - '*.xml'
+#  workflow_dispatch:
+#      inputs:
+#         preRelease:
+#            description: 'Pre-release'
+#            required: false
+#            default: false
+#            type: boolean
+#         draftRelease:
+#            description: 'Draft a release'
+#            required: false
+#            default: false
+#            type: boolean
+#         releaseTitle:
+#            description: 'Release title'
+#            required: true
+#            default: 'Release'
+#            type: string
+
+jobs:
+   build_and_test:
+      name: Upload Artefact job
+      runs-on: ubuntu-20.04
+      steps:
+         - name: Get Time
+           id: time
+           uses: nanzm/get-time-action@v1.0
+           with:
+              timeZone: 1
+              format: 'YYYY-MM-DD'
+
+         - name: Create catkin workspace
+           run: mkdir src
+
+         - name: Checkout repo 
+           uses: actions/checkout@v3
+           with:
+             ref: snap_release # TODO: Fix to noetic-devel
+             path: src/ur12_lidar
+
+         - name: Move snapcraft.yaml to root
+           run: mv src/ur12_lidar/snapcraft.yaml .
+
+         - name: Add deps directory
+           run: mkdir deps
+
+         - name: Zip artefact for deployment
+           run: zip ${{ steps.time.outputs.time }}-ur12_lidarpackage-noetic.zip * -r
+
+         - name: Upload Artifact
+           uses: actions/upload-artifact@v2
+           if: ${{ !env.ACT }}
+           with:
+              name: ${{ steps.time.outputs.time }}-ur12_lidar-noetic
+              path: ${{ steps.time.outputs.time }}-ur12_lidarpackage-noetic.zip
+
+         - name: Package snap
+           id: snapackage
+           uses: snapcore/action-build@v1
+           with:
+             snapcraft-args: --enable-experimental-extensions 
+
+         - uses: snapcore/action-publish@master
+           env:
+               SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPSTORE_CREDS }}
+           with:
+              snap: ${{ steps.snapackage.outputs.snap }}
+              release: edge
+         - name: Generate release tag
+           id: tag
+           run: |
+             echo "::set-output name=release_tag::SnapBuild_$(date +"%Y.%m.%d_%H-%M")"
+#         - name: Release
+#           uses: softprops/action-gh-release@v1
+#           env:
+#             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           with:
+#             tag_name: ${{ steps.tag.outputs.release_tag }}
+#             generate_release_notes: true
+#             draft: false
+#             prerelease: false

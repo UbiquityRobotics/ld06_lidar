@@ -1,0 +1,28 @@
+name: dorkamotorka-ur12lidar 
+title: UR12_LiDAR snap
+base: core20
+version: '0.3' 
+contact: teo.podobnik1234@gmail.com
+issues: https://github.com/tp4348/snapackage/issues
+summary: UR12_LiDAR complete snap package 
+license: BSD-1-Clause
+description: |
+   This snap packages multiple repositories into a single root file system and deploys it
+
+architectures:
+  - build-on: amd64
+    run-on: [armhf, amd64, arm64]
+
+grade: devel 
+confinement: devmode
+
+parts:
+   source-code:
+      plugin: catkin
+      source: .
+      stage-packages: [ros-noetic-rosbag-snapshot]
+
+apps:
+  breadcrumb-snap:
+      command: opt/ros/noetic/bin/roslaunch ur12_lidar ur12_lidar.launch
+      extensions: [ros1-noetic]

@@ -54,6 +54,6 @@ install(TARGETS ${PROJECT_NAME} ur12_lidar
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 install(FILES
-  launch/ur12.launch
+  launch/ur12_lidar.launch
    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
