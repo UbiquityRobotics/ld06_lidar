@@ -11,7 +11,7 @@ This is a catkin package. Make sure the package is on `ROS_PACKAGE_PATH` after c
 Make sure to install deps first:
 
     cd your_work_space/src
-    git clone https://github.com/UbiquityRobotics/ur50_lidar.git
+    git clone https://github.com/UbiquityRobotics/ur12_lidar.git
 
     cd..
     rosdep install --from-paths src --ignore-src --rosdistro=$ROS_DISTRO -y
